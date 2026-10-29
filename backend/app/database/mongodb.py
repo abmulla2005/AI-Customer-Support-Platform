@@ -33,8 +33,8 @@ class DatabaseManager:
                 logger.info(f"Connecting to MongoDB at {uri}...")
                 self.client = AsyncIOMotorClient(
                     uri,
-                    serverSelectionTimeoutMS=1500,
-                    connectTimeoutMS=1500
+                    serverSelectionTimeoutMS=10000,
+                    connectTimeoutMS=10000
                 )
                 await asyncio.wait_for(self.client.admin.command('ping'), timeout=1.5)
                 self.db = self.client[settings.MONGODB_DATABASE]
