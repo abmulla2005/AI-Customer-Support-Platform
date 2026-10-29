@@ -36,14 +36,14 @@ class DatabaseManager:
                     serverSelectionTimeoutMS=10000,
                     connectTimeoutMS=10000
                 )
-                await asyncio.wait_for(self.client.admin.command('ping'), timeout=1.5)
+                await asyncio.wait_for(self.client.admin.command('ping'), timeout=20)
                 self.db = self.client[settings.MONGODB_DATABASE]
                 self.is_mock = False
                 logger.info("Successfully connected to live MongoDB Atlas database!")
                 await self.ensure_indexes()
                 return
             except Exception as e:
-                logger.warning(f"MongoDB connection failed: {e}. Falling back to resilient in-memory storage.")
+                logger.warning(f"MongoDB connection failed: {e!r}. Falling back to resilient in-memory storage.")
 
         logger.info("Engaging ultra-fast in-memory database store (Atlas ready).")
         self.is_mock = True
